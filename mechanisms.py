@@ -1,4 +1,3 @@
-# Bounded Laplace Mechanism (https://arxiv.org/pdf/1808.10410.pdf)
 from diffprivlib.mechanisms import LaplaceBoundedDomain
 import numpy as np
 
@@ -57,7 +56,6 @@ def gaussian(gaze_values, epsilon=2):
 def smoothing(gaze_values, initial_mechanism='smoothing', custom_buffer_size=None, epsilon=2):
     global target_values
 
-    # note this was 10 and 50 before
     first_buffer_size = 10
     second_buffer_size = 50
 
@@ -66,19 +64,16 @@ def smoothing(gaze_values, initial_mechanism='smoothing', custom_buffer_size=Non
         second_buffer_size = custom_buffer_size
         epsilon = custom_buffer_size
 
-    # first add gaussian noise as usual
     original_values = gaze_values.copy()
     if target_values is None:
         target_values = original_values
 
-    # now apply a weighted smoothing function using the noisy values
     smooth_xs = []
     smooth_ys = []
 
     first_buffer = []
     second_buffer = []
 
-    # initialize the buffer with forward vectors
     for _ in range(first_buffer_size):
         first_buffer.append([0, 0])
     for _ in range(second_buffer_size):
